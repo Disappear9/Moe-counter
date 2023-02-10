@@ -28,11 +28,27 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Docker Metadata action
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          labels: |
+            MAINTAINER=Disappear9
+            org.opencontainers.image.title=Moe-counter
+            org.opencontainers.image.description=多种风格可选的萌萌计数器
+            org.opencontainers.image.url=https://github.com/Disappear9/Moe-counter
+            org.opencontainers.image.source=https://github.com/journey-ad/Moe-counter
+          tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
+          images: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE }}
+          
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
           platforms: linux/amd64
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE }}:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha,scope=${{ github.workflow }}
           cache-to: type=gha,mode=max,scope=${{ github.workflow }}
