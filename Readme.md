@@ -24,6 +24,11 @@
 
 ## Usage
 
+### Docker
+```
+sudo docker run -d --name moe-counter -p 8030:3000 -v moe-counter_data:/Moe-counter/db_data ghcr.io/disappear9/moe-counter:latest
+```
+
 ### Install
 
 #### Run on Replit
