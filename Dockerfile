@@ -2,6 +2,8 @@ FROM node:lts-alpine
 
 MAINTAINER Disappear9
 
+WORKDIR /Moe-counter
+
 COPY . .
 
 RUN yarn install
